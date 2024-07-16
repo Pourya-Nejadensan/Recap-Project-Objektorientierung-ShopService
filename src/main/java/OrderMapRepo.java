@@ -26,4 +26,9 @@ public class OrderMapRepo implements OrderRepo{
     public void removeOrder(String id) {
         orders.remove(id);
     }
+
+    @Override
+    public List<Order> getSpecificOrders(OrderStatus orderStatus) {
+        return new ArrayList<>(orders.values().stream().filter(x -> x.orderStatus().equals(orderStatus)).toList());
+    }
 }

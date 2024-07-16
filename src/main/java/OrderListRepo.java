@@ -30,4 +30,8 @@ public class OrderListRepo implements OrderRepo{
             }
         }
     }
+
+    public List<Order> getSpecificOrders(OrderStatus orderStatus) {
+        return orders.stream().filter(x -> x.orderStatus().equals(orderStatus)).toList();
+    }
 }

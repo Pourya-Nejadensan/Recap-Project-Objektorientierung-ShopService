@@ -21,4 +21,8 @@ public class ShopService {
 
         return orderRepo.addOrder(newOrder);
     }
+
+    public List<Order> getSpecificOrders(OrderStatus orderStatus){
+        return orderRepo.getSpecificOrders(orderStatus);
+    }
 }
