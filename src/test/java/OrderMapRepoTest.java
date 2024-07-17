@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,11 +38,11 @@ class OrderMapRepoTest {
         repo.addOrder(newOrder);
 
         //WHEN
-        Order actual = repo.getOrderById("1");
+        Optional<Order> actual = repo.getOrderById("1");
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1), OrderStatus.PROCESSING);
+        Optional<Order> expected = Optional.of(new Order("1", List.of(product1), OrderStatus.PROCESSING));
 
         assertEquals(actual, expected);
     }
@@ -54,11 +55,11 @@ class OrderMapRepoTest {
         Order newOrder = new Order("1", List.of(product), OrderStatus.PROCESSING);
 
         //WHEN
-        Order actual = repo.addOrder(newOrder);
+        Optional<Order> actual = Optional.of(repo.addOrder(newOrder));
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1), OrderStatus.PROCESSING);
+        Optional<Order> expected = Optional.of(new Order("1", List.of(product1), OrderStatus.PROCESSING));
         assertEquals(actual, expected);
         assertEquals(repo.getOrderById("1"), expected);
     }
@@ -72,6 +73,6 @@ class OrderMapRepoTest {
         repo.removeOrder("1");
 
         //THEN
-        assertNull(repo.getOrderById("1"));
+        assertFalse(repo.getOrderById("1").isPresent());
     }
 }

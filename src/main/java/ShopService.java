@@ -1,3 +1,4 @@
+import exception.OrderNotFoundException;
 import exception.ProductNotFoundException;
 
 import java.util.ArrayList;
@@ -26,5 +27,15 @@ public class ShopService {
 
     public List<Order> getSpecificOrders(OrderStatus orderStatus){
         return orderRepo.getSpecificOrders(orderStatus);
+    }
+
+    public Order updateOrder(String orderId, OrderStatus newStatus) {
+        Optional<Order> existingOrder = orderRepo.getOrderById(orderId);
+        if (existingOrder.isEmpty()) {
+            throw new OrderNotFoundException("Order with ID: " + orderId + " does not exist!");
+        }
+
+        Order updatedOrder = existingOrder.get().withOrderStatus(newStatus);
+        return orderRepo.updateOrder(updatedOrder);
     }
 }
